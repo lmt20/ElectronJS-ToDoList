@@ -1,8 +1,17 @@
 body {
-    background: #BBD2C5;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right,  #BBD2C5, #536976, #BBD2C5);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #BBD2C5, #536976,  #BBD2C5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-            
+	background: #bbd2c5; /* fallback for old browsers */
+	background: -webkit-linear-gradient(
+		to right,
+		#bbd2c5,
+		#536976,
+		#bbd2c5
+	); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(
+		to right,
+		#bbd2c5,
+		#536976,
+		#bbd2c5
+	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .main-frame {
@@ -10,14 +19,21 @@ body {
 	margin-top: 25px;
 	margin-bottom: 25px;
 	max-width: 600px;
-    min-height: 600px;
-    
-    background: #606c88;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #3f4c6b, #606c88);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #3f4c6b, #606c88); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        
-    box-shadow: 3px 3px 8px 3px #333;
+	min-height: 600px;
 
+	background: #606c88; /* fallback for old browsers */
+	background: -webkit-linear-gradient(
+		to right,
+		#3f4c6b,
+		#606c88
+	); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(
+		to right,
+		#3f4c6b,
+		#606c88
+	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+	box-shadow: 3px 3px 8px 3px #333;
 }
 
 .calendar {
@@ -69,28 +85,89 @@ body {
 	margin: 1rem;
 	height: 2rem;
 	border-radius: 5px 5px;
+	overflow: visible;
+	font-size: 0.8rem;
 	/* box-shadow: 1px 1px 5px 1px #eee; */
 }
 .progress-bar div {
-	box-shadow: 2px 2px 8px 2px #ccc;
+	box-shadow: 1px 1px 8px 1px #888;
+	position: relative;
 }
-#complete-tasks-bar {
+#completed-tasks-bar {
 	background-color: green;
-	flex-grow: 3;
+	flex-grow: 0;
 }
-#uncomplete-tasks-bar {
+#pausing-tasks-bar {
 	background-color: yellow;
+	flex-grow: 0;
+}
+#current-tasks-bar {
+	background-color: #222;
 	flex-grow: 1;
 }
-#unset-tasks-bar {
-	background-color: #222;
-	flex-grow: 6;
+
+.completed-tasks-tooltip {
+	display: inline-block;
+	color: black;
+	position: absolute;
+	top: -3rem;
+	left: 50%;
+	transform: translate(-50%, 0%);
+	background-color: #3ee22f48;
+	border-radius: 2rem;
+	padding: 0.5rem 1rem;
+}
+.pausing-tasks-tooltip {
+	display: inline-block;
+	color: black;
+	position: absolute;
+	top: -3rem;
+	left: 50%;
+	transform: translate(-50%, 0%);
+	background-color: #e9e62948;
+	border-radius: 2rem;
+	padding: 0.5rem 1rem;
+}
+.current-tasks-tooltip {
+	display: inline-block;
+	color: black;
+	position: absolute;
+	top: -3rem;
+	left: 50%;
+	transform: translate(-50%, 0%);
+	background-color: #31333848;
+	border-radius: 2rem;
+	padding: 0.5rem 1rem;
+}
+
+.tasks-tooltip:after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: #99999955 transparent transparent transparent;
+}
+.tasks-tooltip{
+	display: none;
+}
+
+#completed-tasks-bar:hover .completed-tasks-tooltip{
+	display: inline-block;
+}
+#pausing-tasks-bar:hover .pausing-tasks-tooltip{
+	display: inline-block;
+}
+#current-tasks-bar:hover .current-tasks-tooltip{
+	display: inline-block;
 }
 
 /* Style input field */
 .add-input {
 	margin: 1rem;
-    position: relative;
+	position: relative;
 }
 
 .add-input input {
@@ -98,7 +175,7 @@ body {
 	width: 100%;
 	padding: 0 1rem;
 	background-color: #222;
-    border-width: 0;
+	border-width: 0;
 	border-radius: 5px 5px;
 	color: #eee;
 }
@@ -119,13 +196,13 @@ body {
 	position: relative;
 }
 .task-item {
-    height: 3rem;
-    padding: 0 1rem;
-    background-color: #888;
-    border-radius: 5px 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+	height: 3rem;
+	padding: 0 1rem;
+	background-color: #888;
+	border-radius: 5px 5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 .task-control {
 	position: absolute;

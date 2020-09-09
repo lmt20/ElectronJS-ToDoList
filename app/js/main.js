@@ -18,6 +18,9 @@ function setCurrentTime() {
 }
 
 // Initialize data
+let numCompletedTasks = 0;
+let numPausingTasks = 0;
+let numCurrentTasks = 0;
 ipcRenderer.on('TaskItems:Initial', (event, data) => {
     try {
         const taskList = JSON.parse(data);
@@ -28,7 +31,7 @@ ipcRenderer.on('TaskItems:Initial', (event, data) => {
                 taskContainer.show();
                 taskContainer.children('div.task-item').text(taskItem.name);
                 $('#current-tasks').prepend(taskContainer);
-                $('#current-tasks').prepend(taskContainer);
+                numCurrentTasks += 1;
             }
             else if(taskItem.status === "paused"){
                 const taskContainer = $('#pausing-task-component-template').clone(true);
@@ -36,7 +39,7 @@ ipcRenderer.on('TaskItems:Initial', (event, data) => {
                 taskContainer.show();
                 taskContainer.children('div.task-item').text(taskItem.name);
                 $('#pausing-tasks').prepend(taskContainer);
-                $('#pausing-tasks').prepend(taskContainer);
+                numPausingTasks += 1;
             }
             else if(taskItem.status === "completed"){
                 const taskContainer = $('#completed-task-component-template').clone(true);
@@ -44,14 +47,24 @@ ipcRenderer.on('TaskItems:Initial', (event, data) => {
                 taskContainer.show();
                 taskContainer.children('div.task-item').text(taskItem.name);
                 $('#completed-tasks').prepend(taskContainer);
-                $('#completed-tasks').prepend(taskContainer);
+                numCompletedTasks += 1;
             }
         });
+        updateProgressBar()
     } catch (error) {
         console.log(error);
     }
-
 })
+// Update progess bar
+function updateProgressBar(){
+    $('#completed-tasks-bar').css('flex-grow', numCompletedTasks);
+    $('#pausing-tasks-bar').css('flex-grow', numPausingTasks);
+    $('#current-tasks-bar').css('flex-grow', numCurrentTasks);
+    $('#num-completed-tasks').text(numCompletedTasks);
+    $('#num-pausing-tasks').text(numPausingTasks);
+    $('#num-current-tasks').text(numCurrentTasks);
+
+}
 
 // Add new task item
 let addingTaskContent;
@@ -86,7 +99,8 @@ ipcRenderer.on('TaskItem:completeAdd', (_, data) => {
         taskContainer.show();
         taskContainer.children('div.task-item').text(data);
         $('#current-tasks').prepend(taskContainer);
-        $('#current-tasks').prepend(taskContainer);
+        numCurrentTasks += 1;
+        updateProgressBar();
     }
 })
 
@@ -116,9 +130,11 @@ ipcRenderer.on('TaskItem:completeChangeCompletedStatus', (event, data) => {
         taskContainer.show();
         taskContainer.children('div.task-item').text(selectingTaskContent);
         $('#completed-tasks').prepend(taskContainer);
-        $('#completed-tasks').prepend(taskContainer);
         //remove the task item from current task area
         selectingTaskElement.remove();
+        numCurrentTasks -= 1;
+        numCompletedTasks += 1;
+        updateProgressBar()
     }
 })
 //2. Pause task
@@ -143,9 +159,11 @@ ipcRenderer.on('TaskItem:completeChangePausedStatus', (event, data) => {
         taskContainer.show();
         taskContainer.children('div.task-item').text(selectingTaskContent);
         $('#pausing-tasks').prepend(taskContainer);
-        $('#pausing-tasks').prepend(taskContainer);
         //remove the task item from current task area
         selectingTaskElement.remove();
+        numCurrentTasks -= 1;
+        numPausingTasks += 1;
+        updateProgressBar()
     }
 })
 //3. Continue task
@@ -170,9 +188,11 @@ ipcRenderer.on('TaskItem:completeChangeContinuingStatus', (event, data) => {
         taskContainer.show();
         taskContainer.children('div.task-item').text(selectingTaskContent);
         $('#current-tasks').prepend(taskContainer);
-        $('#current-tasks').prepend(taskContainer);
         //remove the task item from current task area
         selectingTaskElement.remove();
+        numCurrentTasks += 1;
+        numPausingTasks -= 1;
+        updateProgressBar()
     }
 })
 //3. Delete task
@@ -190,9 +210,20 @@ $('.btn-delete').click(function(){
 
 ipcRenderer.on('TaskItem:completDeleteTask', (event, data) => {
     // console.log("received message", data);
-    if(data === selectingTaskContent){
+    data = JSON.parse(data);
+    if(data.task === selectingTaskContent){
         //remove the task item from current task area
         selectingTaskElement.remove();
+        if(data.status === "doing"){
+            numCurrentTasks -= 1;
+        }
+        else if(data.status === "pausing"){
+            numPausingTasks -= 1;
+        }
+        else if(data.status === 'completed'){
+            numCompletedTasks -= 1;
+        }
+        updateProgressBar();
     }
 })
 
@@ -202,6 +233,9 @@ $('.btn-reset').click(function(){
 })
 
 ipcRenderer.on('TaskItems:reload', (event, data) => {
+    numCompletedTasks = 0;
+    numPausingTasks = 0;
+    numCurrentTasks = 0;
     try {
         $('#current-tasks').empty();
         $('#pausing-tasks').empty();
@@ -214,7 +248,7 @@ ipcRenderer.on('TaskItems:reload', (event, data) => {
                 taskContainer.show();
                 taskContainer.children('div.task-item').text(taskItem.name);
                 $('#current-tasks').prepend(taskContainer);
-                $('#current-tasks').prepend(taskContainer);
+                numCurrentTasks += 1;
             }
             else if(taskItem.status === "paused"){
                 const taskContainer = $('#pausing-task-component-template').clone(true);
@@ -222,7 +256,7 @@ ipcRenderer.on('TaskItems:reload', (event, data) => {
                 taskContainer.show();
                 taskContainer.children('div.task-item').text(taskItem.name);
                 $('#pausing-tasks').prepend(taskContainer);
-                $('#pausing-tasks').prepend(taskContainer);
+                numPausingTasks += 1;
             }
             else if(taskItem.status === "completed"){
                 const taskContainer = $('#completed-task-component-template').clone(true);
@@ -230,11 +264,33 @@ ipcRenderer.on('TaskItems:reload', (event, data) => {
                 taskContainer.show();
                 taskContainer.children('div.task-item').text(taskItem.name);
                 $('#completed-tasks').prepend(taskContainer);
-                $('#completed-tasks').prepend(taskContainer);
+                numCompletedTasks += 1;
             }
         });
+        updateProgressBar()
     } catch (error) {
         console.log(error);
     }
 
 })
+
+
+// Toggle expand or collapse icon 
+// 1. Pausing Area
+$('#pausing-list-toggle').click(function(){
+    $('#icon-collapse-pausing-tasks').toggle();
+    $('#icon-expand-pausing-tasks').toggle();
+    $('#pausing-tasks').toggle();
+})
+// 1. Completed Area
+$('#completed-list-toggle').click(function(){
+    $('#icon-collapse-completed-tasks').toggle();
+    $('#icon-expand-completed-tasks').toggle();
+    $('#completed-tasks').toggle();
+})
+
+
+
+// window.onbeforeunload = () => {
+//     ipcRenderer.send("Reload:Page")
+// };

@@ -14,90 +14,128 @@
 		<title>ToDoList</title>
 	</head>
 	<body>
-        <main class="main-frame">
-            <div class="calendar">
-                <div class="mdy-calendar">
-                    <div id="day">24</div>
-                    <div>
-                        <div id="month">Feb</div>
-                        <div id="year">2020</div>
-                    </div>
-                </div>
-                <div id="day-of-week">Monday</div>                
-            </div>
-            <div class="progress-bar">
-                <div id="complete-tasks-bar"></div>
-                <div id="uncomplete-tasks-bar"></div>
-                <div id="unset-tasks-bar"></div>
-            </div>
-            <div class="add-input">
-                <input type="text" id="input-task" placeholder="Add new item">
-                <span id="add-task-icon"><i class="fas fa-plus fa-2x icon"></i></span>
-            </div>
-            <div class="current-tasks" id="current-tasks">
-                <div class="task-item-container" id="current-task-component-template" style="display: none;">
-                    <div class="task-item">
-                    </div>
-                    <div class="task-control">
-                         <button class="btn-delete"><i class="fas fa-times fa-2x" style="color: red"></i></button>
-                         <button class="btn-pause"><i class="fas fa-pause fa-2x" style="color: orange"></i></button>
-                         <button class="btn-complete"><i class="fas fa-check fa-2x" style="color: green"></i></button>
-                    </div>
-                </div>
-            </div>
-            <div class="btn-later-tasks">
-                <i class="fas fa-angle-right"></i>
-                <i class="fas fa-angle-down" style="display: none;"></i>
-                 Do Later
-            </div>
-            <div class="later-tasks" id="pausing-tasks">
+		<main class="main-frame">
+			<div class="calendar">
+				<div class="mdy-calendar">
+					<div id="day">24</div>
+					<div>
+						<div id="month">Feb</div>
+						<div id="year">2020</div>
+					</div>
+				</div>
+				<div id="day-of-week">Monday</div>
+			</div>
+			<div class="progress-bar">
+				<div id="completed-tasks-bar">
+					<span class="completed-tasks-tooltip tasks-tooltip"
+						>Completed tasks: <span id="num-completed-tasks"></span>
+					</span>
+				</div>
+				<div id="pausing-tasks-bar">
+					<span class="pausing-tasks-tooltip tasks-tooltip"
+                        >Pausing tasks: <span id="num-pausing-tasks"></span>
+                    </span>
+				</div>
+				<div id="current-tasks-bar">
+					<span class="current-tasks-tooltip tasks-tooltip"
+                        >Current tasks: <span id="num-current-tasks"></span>
+                    </span>
+				</div>
+			</div>
+			<div class="add-input">
+				<input type="text" id="input-task" placeholder="Add new item" />
+				<span id="add-task-icon"><i class="fas fa-plus fa-2x icon"></i></span>
+			</div>
+			<div class="current-tasks" id="current-tasks">
+				<div
+					class="task-item-container"
+					id="current-task-component-template"
+					style="display: none;"
+				>
+					<div class="task-item"></div>
+					<div class="task-control">
+						<button class="btn-delete">
+							<i class="fas fa-times fa-2x" style="color: red;"></i>
+						</button>
+						<button class="btn-pause">
+							<i class="fas fa-pause fa-2x" style="color: orange;"></i>
+						</button>
+						<button class="btn-complete">
+							<i class="fas fa-check fa-2x" style="color: green;"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="btn-later-tasks" id="pausing-list-toggle">
+				<span style="display: none;" id="icon-collapse-pausing-tasks"><i class="fas fa-angle-right" ></i></span>
+				<span id="icon-expand-pausing-tasks"><i class="fas fa-angle-down"></i></span>
+				Do Later
+			</div>
+			<div class="later-tasks" id="pausing-tasks"></div>
+			<div class="btn-completed-tasks" id="completed-list-toggle">
+				<span style="display: none;" id="icon-collapse-completed-tasks"><i class="fas fa-angle-right" ></i></span>
+				<span id="icon-expand-completed-tasks"><i class="fas fa-angle-down"></i></span>
+				Completed
+			</div>
+			<div class="completed-tasks" id="completed-tasks"></div>
 
-            </div>
-            <div class="btn-completed-tasks">
-                <i class="fas fa-angle-right"></i>
-                <i class="fas fa-angle-down" style="display: none;"></i>
-                 Completed
-            </div>
-            <div class="completed-tasks" id="completed-tasks">
+			<button class="btn-reset">Reset Progress</button>
 
-            </div>
-            
-            <button class="btn-reset">Reset Progress</button>
+			<div style="display: none;">
+				<div
+					class="task-item-container"
+					id="current-task-component-template"
+					style="display: none;"
+				>
+					<div class="task-item"></div>
+					<div class="task-control">
+						<button class="btn-delete">
+							<i class="fas fa-times fa-2x" style="color: red;"></i>
+						</button>
+						<button class="btn-pause">
+							<i class="fas fa-pause fa-2x" style="color: orange;"></i>
+						</button>
+						<button class="btn-complete">
+							<i class="fas fa-check fa-2x" style="color: green;"></i>
+						</button>
+					</div>
+				</div>
+				<div
+					class="task-item-container"
+					id="pausing-task-component-template"
+					style="display: none;"
+				>
+					<div class="task-item"></div>
+					<div class="task-control">
+						<button class="btn-delete">
+							<i class="fas fa-times fa-2x" style="color: red;"></i>
+						</button>
+						<button class="btn-continue">
+							<i class="fas fa-caret-right fa-2x" style="color: orange;"></i>
+						</button>
+						<button class="btn-complete">
+							<i class="fas fa-check fa-2x" style="color: green;"></i>
+						</button>
+					</div>
+				</div>
+				<div
+					class="task-item-container"
+					id="completed-task-component-template"
+					style="display: none;"
+				>
+					<div class="task-item"></div>
+					<div class="task-control">
+						<button class="btn-delete">
+							<i class="fas fa-times fa-2x" style="color: red;"></i>
+						</button>
+					</div>
+				</div>
+			</div>
 
-            <div style="display: none">
-                <div class="task-item-container" id="current-task-component-template" style="display: none;">
-                    <div class="task-item">
-                    </div>
-                    <div class="task-control">
-                         <button class="btn-delete"><i class="fas fa-times fa-2x" style="color: red"></i></button>
-                         <button class="btn-pause"><i class="fas fa-pause fa-2x" style="color: orange"></i></button>
-                         <button class="btn-complete"><i class="fas fa-check fa-2x" style="color: green"></i></button>
-                    </div>
-                </div>
-                <div class="task-item-container" id="pausing-task-component-template" style="display: none;">
-                    <div class="task-item">
-                    </div>
-                    <div class="task-control">
-                         <button class="btn-delete"><i class="fas fa-times fa-2x" style="color: red"></i></button>
-                         <button  class="btn-continue"><i class="fas fa-caret-right fa-2x" style="color: orange"></i></button>
-                         <button class="btn-complete"><i class="fas fa-check fa-2x" style="color: green"></i></button>
-                    </div>
-                </div>
-                <div class="task-item-container" id="completed-task-component-template" style="display: none;">
-                    <div class="task-item">
-                    </div>
-                    <div class="task-control">
-                        <button class="btn-delete"><i class="fas fa-times fa-2x" style="color: red"></i></button>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="footer">
-                Created by Le Manh Truong
-            </div>
-            
-        </main>
+			<div class="footer">
+				Created by Le Manh Truong
+			</div>
+		</main>
 		<script>
 			if (typeof module === "object") {
 				window.module = module;
@@ -108,8 +146,6 @@
 		<script src="./js/bootstrap.min.js"></script>
 		<script src="./js/all.min.js"></script>
 		<script src="./js/main.js"></script>
-		<script>
-			
-		</script>
+		<script></script>
 	</body>
 </html>

@@ -172,9 +172,13 @@ app.on('ready', () => {
                             return taskItem.name === changingData.task;
                         })
                         if(prevDataIndex !== -1){
+                            const sendData = JSON.stringify({
+                                task: changingData.task,
+                                status: storageData[changingData.date][prevDataIndex].status
+                            })
                             storageData[changingData.date].splice(prevDataIndex, 1)
                             fs.writeFile(storageTasksPath, JSON.stringify(storageData), (err) => {
-                                event.reply('TaskItem:completDeleteTask', changingData.task);
+                                event.reply('TaskItem:completDeleteTask', sendData);
                             })
                         }
                     }
@@ -207,6 +211,24 @@ app.on('ready', () => {
             
         })
     })
+    // handler reload issue
+    // ipcMain.on('Reload:Page', () => {
+    //     fs.readFile(storageTasksPath, (err, data) => {
+    //         if(!err) {
+    //             try {
+    //                 const storageData = JSON.parse(data);
+    //                 const date = new Date().toDateString();
+    //                 if(storageData[date]){
+    //                     fs.writeFile(storageTasksPath, JSON.stringify(storageData), (err) => {
+    //                        mainWindow.webContents.send('TaskItems:reload', JSON.stringify(storageData[date]));
+    //                     })
+    //                 }
+    //             } catch (error) {
+    //                 console.log(error);
+    //             }
+    //         }
+    //     })
+    // })
 })
 
 app.on('window-all-closed', () => {
