@@ -15,6 +15,7 @@ body {
 }
 
 .main-frame {
+	position: relative;
 	margin: auto;
 	margin-top: 25px;
 	margin-bottom: 25px;
@@ -246,9 +247,11 @@ body {
 	border-radius: 8px;
 }
 
+
 .footer {
+	position: absolute;
 	font-style: italic;
-	text-align: right;
-	margin-top: 2rem;
 	padding: 0.5rem 1rem;
+	bottom: 0.5rem;
+	right: 0;
 }

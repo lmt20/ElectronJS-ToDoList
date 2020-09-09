@@ -1,0 +1,165 @@
+body {
+	background: #bbd2c5; /* fallback for old browsers */
+	background: -webkit-linear-gradient(
+		to right,
+		#bbd2c5,
+		#536976,
+		#bbd2c5
+	); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(
+		to right,
+		#bbd2c5,
+		#536976,
+		#bbd2c5
+	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.main-frame {
+	position: relative;
+	margin: auto;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	max-width: 600px;
+	min-height: 600px;
+
+	background: #606c88; /* fallback for old browsers */
+	background: -webkit-linear-gradient(
+		to right,
+		#3f4c6b,
+		#606c88
+	); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(
+		to right,
+		#3f4c6b,
+		#606c88
+	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+	box-shadow: 3px 3px 8px 3px #333;
+}
+
+.calendar {
+	display: flex;
+	justify-content: space-between;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #fff;
+	/* text-shadow: 1px 1px 1px #888; */
+	align-content: center;
+}
+
+.mdy-calendar {
+	display: flex;
+}
+
+#day {
+	padding: 1rem 0.4rem 1rem 1rem;
+	font-size: 4rem;
+	font-weight: 700;
+}
+
+#month {
+	margin-top: 1.6rem;
+	font-size: 1.8rem;
+	font-weight: 600;
+}
+
+#year {
+	margin-top: -0.8rem;
+	font-size: 1.8rem;
+	font-weight: 100;
+	color: #ccc;
+}
+
+#day-of-week {
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 1rem;
+	font-size: 2rem;
+	color: #ccc;
+}
+
+/* style task bar */
+
+.footer {
+	position: absolute;
+	font-style: italic;
+	padding: 0.5rem 1rem;
+	bottom: 0.5rem;
+	right: 0;
+}
+
+/* Style mail area  */
+.mail-area {
+	position: absolute;
+	background-color: #efefef;
+	top: 7rem;
+	bottom: 3rem;
+	border-radius: 0.3rem;
+	margin: 0.2rem 1rem
+}
+
+.header-area {
+	background-color: #222;
+	color: #fff;
+	padding: 0.5rem 1rem;
+	border-radius: 0.3rem 0.3rem 0 0;
+}
+
+.target-input {
+	position: relative;
+	display: inline-block;
+	margin: auto;
+	margin-top: 0.7rem;
+	width: 100%;
+}
+.target-input input {
+	display: block;
+	margin: auto;
+	width: 96%;
+	background-color: #efefef;
+	/* font-size: 0.9rem; */
+	border: 0px solid #ddd ;
+	border-bottom-width: 2px;
+	box-shadow: 1px 1px 5px 1px #eee;
+	padding: 0.25rem 0.1rem  0.1rem 1.8rem;
+}
+#subject {
+	padding: 0.25rem 0.1rem  0.1rem 4.1rem;
+}
+.target-input input:focus {
+	outline: none;
+}
+.span-input {	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: absolute;
+	height: 100%;
+	line-height: 100%;
+	color: #555;
+	left: 3%;
+	z-index: 1;
+}
+
+/* Mail content  */
+#mail-content {
+	background-color: #efefef;
+	/* margin-top: 0.2rem; */
+	border-width: 0;
+	padding: 1.2rem;
+	width: 100%;
+	height: 16.3rem;
+}
+
+#mail-content:focus {
+	outline: none;
+}
+
+#btn-send {
+	background-color: #1B73E8dd;
+	margin-left: 1rem;
+	padding: 0.3rem 1.3rem; 
+	border-radius: 5px;
+	border-width: 0;
+}
