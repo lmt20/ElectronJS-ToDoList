@@ -1,0 +1,177 @@
+body {
+    background: #BBD2C5;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right,  #BBD2C5, #536976, #BBD2C5);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #BBD2C5, #536976,  #BBD2C5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            
+}
+
+.main-frame {
+	margin: auto;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	max-width: 600px;
+    min-height: 600px;
+    
+    background: #606c88;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #3f4c6b, #606c88);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #3f4c6b, #606c88); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        
+    box-shadow: 3px 3px 8px 3px #333;
+
+}
+
+.calendar {
+	display: flex;
+	justify-content: space-between;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #fff;
+	/* text-shadow: 1px 1px 1px #888; */
+	align-content: center;
+}
+
+.mdy-calendar {
+	display: flex;
+}
+
+#day {
+	padding: 1rem 0.4rem 1rem 1rem;
+	font-size: 4rem;
+	font-weight: 700;
+}
+
+#month {
+	margin-top: 1.6rem;
+	font-size: 1.8rem;
+	font-weight: 600;
+}
+
+#year {
+	margin-top: -0.8rem;
+	font-size: 1.8rem;
+	font-weight: 100;
+	color: #ccc;
+}
+
+#day-of-week {
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 1rem;
+	font-size: 2rem;
+	color: #ccc;
+}
+
+/* style task bar */
+.progress-bar {
+	display: flex;
+	flex-flow: row;
+	margin: 1rem;
+	height: 2rem;
+	border-radius: 5px 5px;
+	/* box-shadow: 1px 1px 5px 1px #eee; */
+}
+.progress-bar div {
+	box-shadow: 2px 2px 8px 2px #ccc;
+}
+#complete-tasks-bar {
+	background-color: green;
+	flex-grow: 3;
+}
+#uncomplete-tasks-bar {
+	background-color: yellow;
+	flex-grow: 1;
+}
+#unset-tasks-bar {
+	background-color: #222;
+	flex-grow: 6;
+}
+
+/* Style input field */
+.add-input {
+	margin: 1rem;
+    position: relative;
+}
+
+.add-input input {
+	height: 3rem;
+	width: 100%;
+	padding: 0 1rem;
+	background-color: #222;
+    border-width: 0;
+	border-radius: 5px 5px;
+	color: #eee;
+}
+.add-input .icon {
+	position: absolute;
+	height: 3rem;
+	right: 0.4rem;
+	color: #eee;
+	border-width: 0;
+}
+#add-task-icon:hover {
+	cursor: pointer;
+}
+
+/* Style task items */
+.task-item-container {
+	margin: 1rem;
+	position: relative;
+}
+.task-item {
+    height: 3rem;
+    padding: 0 1rem;
+    background-color: #888;
+    border-radius: 5px 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.task-control {
+	position: absolute;
+	height: 3rem;
+	right: 0.4rem;
+	top: 0.5rem;
+}
+.task-control button {
+	border-width: 0;
+	background-color: #888;
+}
+
+.task-control button:hover {
+	cursor: pointer;
+}
+
+/* Style button  */
+.btn-later-tasks {
+	margin-left: 1rem;
+	border-width: 0;
+	background-color: none;
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+.btn-completed-tasks {
+	margin-left: 1rem;
+	border-width: 0;
+	background-color: none;
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+
+/* Reset button */
+.btn-reset {
+	display: block;
+	margin: auto;
+	padding: 1rem;
+	/* background-color:rgba(238,159,16,0.95);
+	color: white; */
+	border-width: 0;
+	border-radius: 8px;
+}
+
+.footer {
+	font-style: italic;
+	text-align: right;
+	margin-top: 2rem;
+	padding: 0.5rem 1rem;
+}
