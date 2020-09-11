@@ -154,7 +154,6 @@ app.on('ready', () => {
     Menu.setApplicationMenu(menu)
     primaryDisplay = screen.getPrimaryDisplay()
     createMainWindow()
-
     // process add task item
     ipcMain.on('TaskItem:add', (event, message) => {
         fs.readFile(storageTasksPath, (err, data) => {
@@ -188,9 +187,13 @@ app.on('ready', () => {
                             return taskItem.name === changingData.task;
                         })
                         if (prevDataIndex !== -1) {
+                            const sendData = {
+                                task: changingData.task,
+                                oldStatus: storageData[changingData.date][prevDataIndex].status
+                            }
                             storageData[changingData.date][prevDataIndex].status = "completed";
                             fs.writeFile(storageTasksPath, JSON.stringify(storageData), (err) => {
-                                event.reply('TaskItem:completeChangeCompletedStatus', changingData.task);
+                                event.reply('TaskItem:completeChangeCompletedStatus', JSON.stringify(sendData));
                             })
                         }
                     }
