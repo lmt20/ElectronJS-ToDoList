@@ -217,7 +217,7 @@ ipcRenderer.on('TaskItem:completDeleteTask', (event, data) => {
         if(data.status === "doing"){
             numCurrentTasks -= 1;
         }
-        else if(data.status === "pausing"){
+        else if(data.status === "paused"){
             numPausingTasks -= 1;
         }
         else if(data.status === 'completed'){

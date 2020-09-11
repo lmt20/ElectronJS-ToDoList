@@ -11,7 +11,17 @@ let sendMailWindow;
 let tray;
 let aboutTray;
 let mailTray;
-const storageTasksPath = path.join(__dirname, 'storage-tasks.json');
+// const storageTasksPath = path.join(__dirname, 'storage-tasks.json');
+const storageTasksPath = path.join(app.getPath('userData'), 'storage-tasks.json');
+// create file to store if not exist
+fs.exists(storageTasksPath, function (exists) {
+    if (!exists) {
+        fs.writeFile(storageTasksPath,'{}', { flag: 'wx' }, function (err) {
+            if(err) throw err;
+            console.log("Create new file with the empty object content!");
+        })
+    }
+});
 
 function createMainWindow() {
     mainWindow = new BrowserWindow({
@@ -24,7 +34,7 @@ function createMainWindow() {
         },
     })
     mainWindow.loadFile('./app/index.html')
-    createTray()
+    // createMainTray()
     if (isDev) {
         mainWindow.webContents.openDevTools()
     }
@@ -57,7 +67,7 @@ function createAboutWindow() {
     })
     aboutWindow.loadURL('https://github.com/lmt20')
     if (!aboutTray) {
-        createAboutTray();
+        // createAboutTray();
     }
 }
 function createSendMailWindow() {
@@ -73,12 +83,12 @@ function createSendMailWindow() {
     })
     sendMailWindow.loadFile('./app/send-mail.html')
     if(!mailTray) {
-        createMailTray();
+        // createMailTray();
     }
 
 }
 
-function createTray() {
+function createMainTray() {
     tray = new Tray('./assets/icons/todolist-final.png')
     const contextMenu = Menu.buildFromTemplate([
         {
@@ -320,7 +330,9 @@ app.on('ready', () => {
                     const date = new Date().toDateString();
                     if (storageData[date]) {
                         fs.writeFile(storageTasksPath, JSON.stringify(storageData), (err) => {
-                            sendMailWindow.webContents.send('TaskItems:completeGetAll', JSON.stringify(storageData[date]));
+                            sendMailWindow.webContents.on('did-finish-load', () => {
+                                sendMailWindow.webContents.send('TaskItems:completeGetAll', JSON.stringify(storageData[date]));
+                            })
                         })
                     }
                 } catch (error) {

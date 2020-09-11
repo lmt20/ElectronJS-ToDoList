@@ -85,9 +85,9 @@ $('#btn-send').click(() => {
   let mailOptions = {
     from: 'truonglm@vietis.com.vn',
     // to: 'truonglm@vietis.com.vn',
-    to: 'lam.nguyenquynh@vietis.com.vn, bich.luongthi@vietis.com.vn',
+    to: $('#recipients').val(),
     subject: `[TRAINING_JS_NODEJS] Daily report ${dateFormateString}`,
-    text: finalContent,
+    text: $('#mail-content').val(),
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
